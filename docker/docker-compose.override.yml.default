@@ -7,7 +7,7 @@ services:
     volumes:
       - "./90-mail.ini:/etc/php${PHP_VERSION}/conf.d/90-mail.ini:z"
 # Uncomment next line if you need PHP XDebug.
-#    command: php-fpm7 -F -d zend_extension=xdebug.so
+    command: php-fpm7 -F -d zend_extension=xdebug.so
 
 # Use local folder to not lose data on container crash.
 # CAUTION: Don't use this section on development machine because container
@@ -35,7 +35,7 @@ services:
     networks:
       - front
 
-  nginx:
+#  nginx:
 # Uncomment for MacOS.
 #    ports:
 #    - "8088:80"

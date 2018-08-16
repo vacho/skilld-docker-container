@@ -8,8 +8,7 @@ services:
 #    depends_on:
 #      - mysql
     volumes:
-      - ../:/var/www/html:z
-      - ../drush/.drushrc.php:/home/www-data/.drushrc.php:z
+      - ../drupal/:/var/www/html:z
     restart: always
     networks:
       - front
@@ -31,7 +30,7 @@ services:
 #    image: percona:5.7
 #    container_name: "${COMPOSE_PROJECT_NAME}_mysql"
 #    volumes:
-#      - /dev/shm/${COMPOSE_PROJECT_NAME}_mysql:/var/lib/mysql:Z
+#      - ../mysql:/var/lib/mysql:Z
 #    environment:
 #      MYSQL_DATABASE: d8
 #      MYSQL_USER: d8
