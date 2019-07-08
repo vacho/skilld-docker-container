@@ -1,6 +1,3 @@
-# Add utility functions and scripts to the container
-include scripts/makefile/*.mk
-
 .PHONY: all provision si exec exec0 down clean dev drush info phpcs phpcbf hooksymlink clang cinsp compval watchdogval drupalcheckval behat sniffers tests front behatdl behatdi browser_driver browser_driver_stop
 .DEFAULT_GOAL := help
 
@@ -12,6 +9,9 @@ include scripts/makefile/*.mk
 $(shell false | cp -i \.env.default \.env 2>/dev/null)
 $(shell false | cp -i \.\/docker\/docker-compose\.override\.yml\.default \.\/docker\/docker-compose\.override\.yml 2>/dev/null)
 include .env
+
+# Add utility functions and scripts to the container
+include scripts/makefile/*.mk
 
 # Get user/group id to manage permissions between host and containers.
 LOCAL_UID := $(shell id -u)
@@ -43,7 +43,9 @@ phpcsexec = docker run --rm \
 
 
 ## Full site install from the scratch
-all: | provision composer si hooksymlink info
+all: | provision composer front si info
+## Full site install from the scratch without front task(it managed in .gitlab-ci).
+all_ci: | provision composer si info
 
 ## Provision enviroment
 provision:
@@ -79,8 +81,6 @@ else
 endif
 	$(call php, composer drupal-scaffold)
 	$(call php, composer create-required-files)
-#	Uncomment this string to build front separately. See scripts/makefile/front.mk
-#	make -s front
 
 ## Install drupal.
 si:
